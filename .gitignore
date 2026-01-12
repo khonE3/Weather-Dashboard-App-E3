@@ -1,24 +1,63 @@
-# Nestjs specific
-/dist
-/node_modules
-/build
-/tmp
+# Dependencies
+node_modules/
 
-# Logs
-logs
-*.log
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Bun lockfile (optional - can include if team uses same bun version)
+# bun.lockb
+
+# Debug logs
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+.pnpm-debug.log*
 
-# dotenv environment variable files
+# Environment variables
 .env
-.env.development
-.env.test
-.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
 
-# temp directory
-.temp
-.tmp
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# Misc
+*.pem
+*.log
+.cache/
+tmp/
+temp/

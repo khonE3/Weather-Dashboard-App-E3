@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --isan-forest: #2D5016;
+  --isan-earth: #8B4513;
+  --isan-gold: #DAA520;
+  --isan-brick: #CD5C5C;
+  --isan-rice: #F5F5DC;
+  --isan-sky: #87CEEB;
+  --isan-sunset: #FF6B35;
+  --isan-night: #1a1a2e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Sarabun', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(135deg, var(--isan-forest) 0%, var(--isan-sky) 50%, var(--isan-sunset) 100%);
+  background-attachment: fixed;
+  color: white;
+}
+
+/* Isan Pattern Overlay */
+.isan-pattern-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(218, 165, 32, 0.3) 10px,
+    rgba(218, 165, 32, 0.3) 20px
+  );
+  z-index: 1;
+}
+
+/* Floating Clouds Animation */
+.cloud {
+  position: fixed;
+  opacity: 0.8;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cloud-1 {
+  top: 10%;
+  left: -10%;
+  animation: floatCloud 25s linear infinite;
+}
+
+.cloud-2 {
+  top: 30%;
+  left: -15%;
+  animation: floatCloud 30s linear infinite 5s;
+}
+
+.cloud-3 {
+  top: 50%;
+  left: -20%;
+  animation: floatCloud 35s linear infinite 10s;
+}
+
+@keyframes floatCloud {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 200px));
+  }
+}
+
+/* Rain Effect */
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.5));
+  animation: rain 1s linear infinite;
+}
+
+@keyframes rain {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Rice Field Sway Animation */
+.rice-field {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.rice-stalk {
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to top, var(--isan-earth), var(--isan-gold));
+  border-radius: 50% 50% 0 0;
+  transform-origin: bottom center;
+  animation: sway 3s ease-in-out infinite;
+}
+
+.rice-stalk:nth-child(odd) {
+  animation-delay: 0.5s;
+}
+
+.rice-stalk:nth-child(3n) {
+  height: 70px;
+  animation-delay: 1s;
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Glass Card Effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Temperature-based background */
+.temp-hot {
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #DAA520 100%) !important;
+}
+
+.temp-warm {
+  background: linear-gradient(135deg, #DAA520 0%, #87CEEB 100%) !important;
+}
+
+.temp-cool {
+  background: linear-gradient(135deg, #2D5016 0%, #87CEEB 100%) !important;
+}
+
+.temp-cold {
+  background: linear-gradient(135deg, #1a1a2e 0%, #4a90a4 100%) !important;
+}
+
+/* Mascot Animation */
+.mascot {
+  transition: transform 0.3s ease;
+}
+
+.mascot:hover {
+  transform: scale(1.1);
+}
+
+.mascot:hover .dog-ear {
+  animation: wagEar 0.3s ease-in-out infinite;
+}
+
+.mascot:hover .dog-tail {
+  animation: wagTail 0.2s ease-in-out infinite;
+}
+
+@keyframes wagEar {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes wagTail {
+  0%, 100% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--isan-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--isan-sunset);
+}
+
+/* Responsive */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
