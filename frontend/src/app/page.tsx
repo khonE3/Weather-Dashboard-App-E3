@@ -117,19 +117,19 @@ export default function Home() {
                         <div className="flex flex-wrap justify-center gap-2">
                             <button
                                 onClick={() => handleProvinceSelect({ name: 'หนองบัวลำภู', lat: 17.2216, lon: 102.4260 })}
-                                className="px-4 py-2 bg-isan-gold/30 hover:bg-isan-gold/50 rounded-full transition-all"
+                                className="px-4 py-2 bg-isan-gold/30 hover:bg-isan-gold/50 border-2 border-isan-gold transition-all"
                             >
                                 🏠 หนองบัวลำภู
                             </button>
                             <button
                                 onClick={() => handleProvinceSelect({ name: 'กรุงเทพมหานคร', lat: 13.7563, lon: 100.5018 })}
-                                className="px-4 py-2 bg-isan-gold/30 hover:bg-isan-gold/50 rounded-full transition-all"
+                                className="px-4 py-2 bg-isan-gold/30 hover:bg-isan-gold/50 border-2 border-isan-gold transition-all"
                             >
                                 🏙️ กรุงเทพฯ
                             </button>
                             <button
                                 onClick={() => handleProvinceSelect({ name: 'เชียงใหม่', lat: 18.7883, lon: 98.9853 })}
-                                className="px-4 py-2 bg-isan-gold/30 hover:bg-isan-gold/50 rounded-full transition-all"
+                                className="px-4 py-2 bg-isan-gold/30 hover:bg-isan-gold/50 border-2 border-isan-gold transition-all"
                             >
                                 ⛰️ เชียงใหม่
                             </button>

@@ -54,8 +54,8 @@ export default function GPSButton({ onSuccess }: GPSButtonProps) {
                 onClick={handleClick}
                 disabled={loading}
                 className={`
-          px-6 py-3 rounded-xl font-medium transition-all duration-300
-          flex items-center gap-2 whitespace-nowrap
+          px-6 py-3 font-medium transition-all duration-300
+          flex items-center gap-2 whitespace-nowrap border-2 border-isan-earth
           ${loading
                         ? 'bg-white/20 cursor-wait'
                         : 'bg-isan-gold hover:bg-isan-sunset hover:scale-105 active:scale-95'
@@ -66,7 +66,7 @@ export default function GPSButton({ onSuccess }: GPSButtonProps) {
             >
                 {loading ? (
                     <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white animate-spin" />
                         <span>กำลังค้นหา...</span>
                     </>
                 ) : (
@@ -79,7 +79,7 @@ export default function GPSButton({ onSuccess }: GPSButtonProps) {
 
             {/* Error Tooltip */}
             {error && (
-                <div className="absolute top-full left-0 right-0 mt-2 p-2 bg-red-500/90 backdrop-blur-sm rounded-lg text-sm text-center animate-fade-in">
+                <div className="absolute top-full left-0 right-0 mt-2 p-2 bg-red-500/90 backdrop-blur-sm text-sm text-center animate-fade-in border-2 border-red-700">
                     ❌ {error}
                 </div>
             )}

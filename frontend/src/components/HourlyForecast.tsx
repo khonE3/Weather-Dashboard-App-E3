@@ -42,7 +42,7 @@ export default function HourlyForecast({ data }: HourlyForecastProps) {
                 <span>พยากรณ์รายชั่วโมง</span>
             </h3>
 
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
+            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin">
                 {next24Hours.map((hour, index) => {
                     if (!hour) return null;
                     const weatherInfo = getWeatherInfo(hour.weatherCode);
@@ -52,22 +52,22 @@ export default function HourlyForecast({ data }: HourlyForecastProps) {
                         <div
                             key={index}
                             className={`
-                flex-shrink-0 flex flex-col items-center p-3 rounded-xl min-w-[70px]
-                transition-all duration-300 hover:scale-105
-                ${isNow ? 'bg-isan-gold/30 ring-2 ring-isan-gold' : 'bg-white/10'}
+                flex-shrink-0 flex flex-col items-center p-4 min-w-[85px]
+                transition-all duration-300 hover:scale-105 border-2 border-isan-gold/50
+                ${isNow ? 'bg-isan-gold/30 border-isan-gold' : 'bg-white/10'}
               `}
                         >
-                            <div className="text-xs text-white/70 mb-1">
+                            <div className="text-sm text-white/80 mb-2 font-medium">
                                 {formatHour(hour.time)}
                             </div>
-                            <div className="text-2xl my-1">
+                            <div className="text-3xl my-2">
                                 {weatherInfo.icon}
                             </div>
-                            <div className="font-bold">
+                            <div className="font-bold text-lg">
                                 {Math.round(hour.temp)}°
                             </div>
                             {hour.precipitation > 0 && (
-                                <div className="text-xs text-blue-300 mt-1">
+                                <div className="text-xs text-blue-300 mt-2">
                                     💧 {hour.precipitation}%
                                 </div>
                             )}

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-interface Province {
+export interface Province {
     name: string;
     name_en: string;
     lat: number;

@@ -46,14 +46,22 @@ export default function RootLayout({
                 </div>
 
                 {/* Main Content */}
-                <main className="relative z-10 min-h-screen">
+                <main className="relative z-10 min-h-screen pb-24">
                     {children}
                 </main>
 
-                {/* Rice Field at Bottom */}
+                {/* Rice Field with Flowers at Bottom */}
                 <div className="rice-field">
-                    {Array.from({ length: 50 }).map((_, i) => (
-                        <div key={i} className="rice-stalk" style={{ animationDelay: `${i * 0.1}s` }} />
+                    {Array.from({ length: 100 }).map((_, i) => (
+                        <div key={i} className="stalk-group" style={{ animationDelay: `${i * 0.05}s` }}>
+                            {/* Random flower every 5th stalk - on top of stalk */}
+                            {i % 5 === 0 && (
+                                <div className="flower">
+                                    {['🌸', '🌼', '🌺', '🌻'][i % 4]}
+                                </div>
+                            )}
+                            <div className="rice-stalk" />
+                        </div>
                     ))}
                 </div>
             </body>

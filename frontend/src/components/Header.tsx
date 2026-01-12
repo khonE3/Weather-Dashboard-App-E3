@@ -3,10 +3,18 @@
 import React from 'react';
 
 export default function Header() {
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
     return (
         <header className="flex items-center justify-center gap-4 mb-6 animate-fade-in">
-            {/* Dog Mascot Logo */}
-            <div className="mascot cursor-pointer relative">
+            {/* Dog Mascot Logo - Click to refresh */}
+            <button
+                onClick={handleRefresh}
+                className="mascot cursor-pointer relative group hover:scale-110 transition-transform"
+                title="รีเฟรชหน้าเว็บ"
+            >
                 <svg
                     width="80"
                     height="80"
@@ -83,12 +91,7 @@ export default function Header() {
                     <rect x="38" y="52" width="24" height="5" rx="2" fill="#CD5C5C" />
                     <circle cx="50" cy="57" r="3" fill="#DAA520" />
                 </svg>
-
-                {/* Speech Bubble */}
-                <div className="absolute -top-2 -right-2 bg-white text-isan-earth text-xs px-2 py-1 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
-                    อร่อย!
-                </div>
-            </div>
+            </button>
 
             {/* Title */}
             <div className="text-center">
