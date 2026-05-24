@@ -2,83 +2,83 @@
 
 import React from 'react';
 import { WeatherData, getWeatherInfo } from '@/types/weather';
+import WeatherIcon from '@/components/WeatherIcon';
+import { Droplets, Wind, CloudRain } from 'lucide-react';
 
-interface CurrentWeatherProps {
-    data: WeatherData;
-    provinceName: string;
-}
+interface CurrentWeatherProps { data: WeatherData; provinceName: string; }
 
 export default function CurrentWeather({ data, provinceName }: CurrentWeatherProps) {
     const current = data.current;
     const weatherInfo = getWeatherInfo(current.weather_code);
+    const temp = Math.round(current.temperature_2m);
+    const feelsLike = Math.round(current.apparent_temperature);
 
-    const formatTime = (timeString: string) => {
-        const date = new Date(timeString);
-        return date.toLocaleTimeString('th-TH', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
+    const formatTime = (t: string) => new Date(t).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: false });
+    const formatDate = (t: string) => new Date(t).toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    const getTempPill = () => {
+        if (temp >= 35) return { label: 'ร้อนจัด', cls: 'pill-red' };
+        if (temp >= 29) return { label: 'ร้อน', cls: 'pill-amber' };
+        if (temp >= 22) return { label: 'อบอุ่น', cls: 'pill-green' };
+        return { label: 'เย็น', cls: 'pill-purple' };
     };
+    const pill = getTempPill();
 
-    const formatDate = (timeString: string) => {
-        const date = new Date(timeString);
-        return date.toLocaleDateString('th-TH', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
+    const getMascotMessage = () => {
+        const code = current.weather_code;
+        if (code >= 51 && code <= 99) return 'ฝนตกแล้วจ้า อย่าลืมพกร่มเด้อ!';
+        if (temp >= 35) return 'ร้อนตับแลบเลย! ทาครีมกันแดด และดื่มน้ำบ่อยๆ นะจ้า';
+        if (temp >= 29) return 'อากาศร้อนพอสมควร หลบแดดหน่อยนะมนุษย์!';
+        if (temp <= 22) return 'อากาศเย็นสบาย ใส่เสื้อกันหนาวไว้ด้วยนะจ้า';
+        if (current.wind_speed_10m >= 20) return 'ลมแรงนะวันนี้ ระวังของปลิวด้วยเด้อ!';
+        return 'อากาศดี เหมาะกับการออกไปข้างนอกมากเลย!';
     };
 
     return (
-        <div className="glass-card p-6 text-center">
-            {/* Location & Time */}
-            <div className="mb-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-shadow flex items-center justify-center gap-2">
-                    <span>📍</span>
-                    <span>{provinceName}</span>
-                </h2>
-                <p className="text-white/70 text-sm mt-1">
-                    {formatDate(current.time)} • {formatTime(current.time)}
-                </p>
-            </div>
-
-            {/* Main Temperature Display */}
-            <div className="flex items-center justify-center gap-4 mb-4">
-                <span className="text-6xl sm:text-7xl">{weatherInfo.icon}</span>
+        <div className="card-accent p-6">
+            {/* Header row */}
+            <div className="flex items-start justify-between mb-5">
                 <div>
-                    <div className="text-5xl sm:text-6xl font-bold text-shadow">
-                        {Math.round(current.temperature_2m)}°
+                    <h2 className="text-lg font-semibold text-[#f0f2f5]">{provinceName}</h2>
+                    <p className="text-sm text-[#8b90a0] mt-0.5">{formatDate(current.time)} · {formatTime(current.time)} น.</p>
+                </div>
+                <span className={`pill ${pill.cls}`}>{pill.label}</span>
+            </div>
+
+            {/* Temp + Icon */}
+            <div className="flex items-center gap-5 mb-5">
+                <WeatherIcon code={current.weather_code} className="w-16 h-16 select-none" />
+                <div>
+                    <div className="flex items-start">
+                        <span className="text-6xl font-bold tracking-tight text-[#f0f2f5]">{temp}</span>
+                        <span className="text-2xl font-medium text-[#8b90a0] mt-2 ml-1">°C</span>
                     </div>
-                    <div className="text-white/80">
-                        รู้สึกเหมือน {Math.round(current.apparent_temperature)}°
-                    </div>
+                    <p className="text-sm text-[#8b90a0]">รู้สึกเหมือน <span className="text-[#f0f2f5] font-medium">{feelsLike}°</span></p>
+                    <p className="text-sm text-[#8b90a0] mt-0.5">{weatherInfo.description}</p>
                 </div>
             </div>
 
-            {/* Weather Description */}
-            <div className="text-lg font-medium mb-4">
-                {weatherInfo.description}
+            <hr className="divider mb-4" />
+
+            {/* Quick stats */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+                {[
+                    { label: 'ความชื้น', value: `${current.relative_humidity_2m}%`, icon: <Droplets className="w-5 h-5 text-sky-400" /> },
+                    { label: 'ความเร็วลม', value: `${Math.round(current.wind_speed_10m)} km/h`, icon: <Wind className="w-5 h-5 text-teal-400" /> },
+                    { label: 'ปริมาณฝน', value: `${current.precipitation} mm`, icon: <CloudRain className="w-5 h-5 text-blue-400" /> },
+                ].map((s) => (
+                    <div key={s.label} className="bg-[#1a1d26] rounded-2xl p-3 text-center flex flex-col items-center justify-center gap-1.5">
+                        <div>{s.icon}</div>
+                        <div className="text-sm font-semibold text-[#f0f2f5]">{s.value}</div>
+                        <div className="text-xs text-[#4a5068] mt-0.5">{s.label}</div>
+                    </div>
+                ))}
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4 text-sm">
-                <div className="bg-white/10 rounded-lg p-3">
-                    <div className="text-2xl">💧</div>
-                    <div className="font-medium">{current.relative_humidity_2m}%</div>
-                    <div className="text-white/60 text-xs">ความชื้น</div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-3">
-                    <div className="text-2xl">💨</div>
-                    <div className="font-medium">{Math.round(current.wind_speed_10m)} km/h</div>
-                    <div className="text-white/60 text-xs">ความเร็วลม</div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-3">
-                    <div className="text-2xl">🌧️</div>
-                    <div className="font-medium">{current.precipitation} mm</div>
-                    <div className="text-white/60 text-xs">ปริมาณฝน</div>
-                </div>
+            {/* Mascot speech bubble */}
+            <div className="flex items-start gap-3 bg-[#1a1d26] rounded-2xl p-3.5">
+                <span className="text-2xl select-none flex-shrink-0">🐕</span>
+                <p className="text-sm text-[#8b90a0] leading-relaxed">{getMascotMessage()}</p>
             </div>
         </div>
     );

@@ -9,61 +9,48 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                // Isan Theme - Nong Bua Lam Phu Colors
-                isan: {
-                    forest: '#2D5016',      // เขียวป่า
-                    earth: '#8B4513',       // น้ำตาลดิน
-                    gold: '#DAA520',        // ทอง
-                    brick: '#CD5C5C',       // ส้มอิฐ
-                    rice: '#F5F5DC',        // สีข้าว
-                    sky: '#87CEEB',         // ฟ้า
-                    sunset: '#FF6B35',      // พระอาทิตย์ตก
-                    night: '#1a1a2e',       // กลางคืน
+                mountain: {
+                    sky:    '#05070d',
+                    peak:   '#0e1e32',
+                    mid:    '#0b1828',
+                    near:   '#091220',
+                    ground: '#070d18',
+                },
+                accent: {
+                    blue:  '#4f8ef7',
+                    sky:   '#38bdf8',
+                    amber: '#f59e0b',
                 },
             },
             fontFamily: {
-                thai: ['Sarabun', 'sans-serif'],
+                sans:  ['Inter', 'Sarabun', 'sans-serif'],
+                thai:  ['Sarabun', 'sans-serif'],
             },
             animation: {
-                'float': 'float 6s ease-in-out infinite',
-                'float-slow': 'float 8s ease-in-out infinite',
-                'sway': 'sway 3s ease-in-out infinite',
-                'pulse-slow': 'pulse 3s ease-in-out infinite',
-                'fade-in': 'fadeIn 0.5s ease-out',
-                'slide-up': 'slideUp 0.5s ease-out',
-                'rain': 'rain 1s linear infinite',
-                'wag': 'wag 0.5s ease-in-out infinite',
+                'fade-in':  'fadeIn  0.35s ease both',
+                'fade-up':  'fadeUp  0.45s ease both',
+                'slide-up': 'fadeUp  0.5s  ease both',
+                'spin':     'spin    1s linear infinite',
+                // Dog mascot
+                'wag-ear-left':  'wagEarLeft  0.4s ease-in-out infinite',
+                'wag-ear-right': 'wagEarRight 0.4s ease-in-out infinite',
+                'wag-tail':      'wagTail     0.18s ease-in-out infinite',
+                'blush-pulse':   'blushPulse  0.6s ease-in-out infinite alternate',
+                // Rain
+                'rain': 'rain 0.7s linear infinite',
             },
             keyframes: {
-                float: {
-                    '0%, 100%': { transform: 'translateY(0px)' },
-                    '50%': { transform: 'translateY(-20px)' },
-                },
-                sway: {
-                    '0%, 100%': { transform: 'rotate(-3deg)' },
-                    '50%': { transform: 'rotate(3deg)' },
-                },
-                fadeIn: {
-                    '0%': { opacity: '0' },
-                    '100%': { opacity: '1' },
-                },
-                slideUp: {
-                    '0%': { transform: 'translateY(20px)', opacity: '0' },
-                    '100%': { transform: 'translateY(0)', opacity: '1' },
-                },
-                rain: {
-                    '0%': { transform: 'translateY(-100%)' },
-                    '100%': { transform: 'translateY(100vh)' },
-                },
-                wag: {
-                    '0%, 100%': { transform: 'rotate(-10deg)' },
-                    '50%': { transform: 'rotate(10deg)' },
-                },
+                fadeIn:       { from: { opacity: '0' },                          to: { opacity: '1' } },
+                fadeUp:       { from: { opacity: '0', transform: 'translateY(12px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+                wagEarLeft:   { '0%,100%': { transform: 'rotate(0)' },           '50%': { transform: 'rotate(-8deg) translateY(-2px)' } },
+                wagEarRight:  { '0%,100%': { transform: 'rotate(0)' },           '50%': { transform: 'rotate(8deg) translateY(-2px)' } },
+                wagTail:      { '0%,100%': { transform: 'rotate(-10deg)' },      '50%': { transform: 'rotate(14deg)' } },
+                blushPulse:   { from: { opacity: '.55' },                        to:   { opacity: '.9' } },
+                rain:         { from: { transform: 'translateY(-30px)', opacity: '0' }, '10%': { opacity: '1' }, '90%': { opacity: '1' }, to: { transform: 'translateY(100vh)', opacity: '0' } },
+                spin:         { from: { transform: 'rotate(0deg)' },             to: { transform: 'rotate(360deg)' } },
             },
-            backgroundImage: {
-                'isan-pattern': "url('/patterns/khit.svg')",
-                'gradient-warm': 'linear-gradient(135deg, #FF6B35 0%, #DAA520 100%)',
-                'gradient-cool': 'linear-gradient(135deg, #2D5016 0%, #87CEEB 100%)',
+            backdropBlur: {
+                xs: '2px',
             },
         },
     },

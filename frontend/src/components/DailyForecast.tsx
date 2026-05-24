@@ -1,79 +1,52 @@
 'use client';
 
 import React from 'react';
-import { WeatherData, getWeatherInfo } from '@/types/weather';
+import { WeatherData } from '@/types/weather';
+import WeatherIcon from '@/components/WeatherIcon';
+import { Droplets, Sunrise, Sunset } from 'lucide-react';
 
-interface DailyForecastProps {
-    data: WeatherData;
-}
+interface DailyForecastProps { data: WeatherData; }
 
 export default function DailyForecast({ data }: DailyForecastProps) {
     const daily = data.daily;
 
-    const formatDay = (timeString: string, index: number) => {
-        if (index === 0) return 'วันนี้';
-        if (index === 1) return 'พรุ่งนี้';
-
-        const date = new Date(timeString);
-        return date.toLocaleDateString('th-TH', { weekday: 'short', day: 'numeric', month: 'short' });
+    const fmtDay = (t: string, i: number) => {
+        if (i === 0) return 'วันนี้';
+        if (i === 1) return 'พรุ่งนี้';
+        return new Date(t).toLocaleDateString('th-TH', { weekday: 'short', day: 'numeric', month: 'short' });
     };
-
-    const formatTime = (timeString: string) => {
-        const date = new Date(timeString);
-        return date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: false });
-    };
+    const fmtTime = (t: string) => new Date(t).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: false });
 
     return (
-        <div className="glass-card p-4">
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <span>📅</span>
-                <span>พยากรณ์ 7 วัน</span>
-            </h3>
-
-            <div className="space-y-2">
-                {daily.time.map((time, index) => {
-                    const weatherInfo = getWeatherInfo(daily.weather_code[index]);
-                    const isToday = index === 0;
-
+        <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-[#f0f2f5]">พยากรณ์ 7 วัน</h3>
+            </div>
+            <div className="space-y-1">
+                {daily.time.map((t, i) => {
+                    const isToday = i === 0;
                     return (
-                        <div
-                            key={index}
-                            className={`
-                flex items-center justify-between p-3 rounded-xl
-                transition-all duration-300 hover:bg-white/10
-                ${isToday ? 'bg-isan-gold/20' : 'bg-white/5'}
-              `}
-                        >
-                            {/* Day */}
-                            <div className="w-20 font-medium">
-                                {formatDay(time, index)}
-                            </div>
-
-                            {/* Weather Icon & Precipitation */}
-                            <div className="flex items-center gap-2">
-                                <span className="text-2xl">{weatherInfo.icon}</span>
-                                {daily.precipitation_probability_max[index] > 0 && (
-                                    <span className="text-xs text-blue-300">
-                                        💧{daily.precipitation_probability_max[index]}%
+                        <div key={i} className={`flex items-center px-3 py-3 rounded-xl transition-colors hover:bg-[#1a1d26] ${
+                            isToday ? 'bg-[#4f8ef7]/06' : ''
+                        }`}>
+                            <span className={`w-24 text-sm font-medium ${isToday ? 'text-[#7eb3ff]' : 'text-[#f0f2f5]'}`}>{fmtDay(t, i)}</span>
+                            <div className="flex items-center gap-2 w-20">
+                                <WeatherIcon code={daily.weather_code[i]} className="w-6 h-6 select-none" />
+                                {daily.precipitation_probability_max[i] > 0 && (
+                                    <span className="text-[10px] font-bold text-[#38bdf8] flex items-center gap-0.5">
+                                        <Droplets className="w-2.5 h-2.5 text-[#38bdf8]" />
+                                        {daily.precipitation_probability_max[i]}%
                                     </span>
                                 )}
                             </div>
-
-                            {/* Temperature Range */}
-                            <div className="flex items-center gap-2 text-sm">
-                                <span className="text-blue-300">
-                                    {Math.round(daily.temperature_2m_min[index])}°
-                                </span>
-                                <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full" />
-                                <span className="text-orange-300">
-                                    {Math.round(daily.temperature_2m_max[index])}°
-                                </span>
+                            <div className="flex-1 flex items-center justify-end gap-3">
+                                <span className="text-sm font-medium text-[#38bdf8]">{Math.round(daily.temperature_2m_min[i])}°</span>
+                                <div className="w-14 h-1 bg-gradient-to-r from-[#38bdf8] to-[#f59e0b] rounded-full" />
+                                <span className="text-sm font-medium text-[#f59e0b]">{Math.round(daily.temperature_2m_max[i])}°</span>
                             </div>
-
-                            {/* Sunrise/Sunset (hidden on mobile) */}
-                            <div className="hidden sm:flex items-center gap-3 text-xs text-white/60">
-                                <span>🌅 {formatTime(daily.sunrise[index])}</span>
-                                <span>🌇 {formatTime(daily.sunset[index])}</span>
+                            <div className="hidden md:flex items-center gap-3 ml-4 text-xs text-[#4a5068]">
+                                <span className="flex items-center gap-1"><Sunrise className="w-3.5 h-3.5 text-amber-500" /> {fmtTime(daily.sunrise[i])}</span>
+                                <span className="flex items-center gap-1"><Sunset className="w-3.5 h-3.5 text-orange-500" /> {fmtTime(daily.sunset[i])}</span>
                             </div>
                         </div>
                     );
