@@ -70,3 +70,25 @@ export async function searchProvinces(query: string) {
         p.name_en?.toLowerCase().includes(normalizedQuery)
     ).slice(0, 10);
 }
+
+export function findNearestProvince(lat: number, lon: number) {
+    // Import dynamically or directly? Since this runs on client, we can import provinces
+    // Let's use standard import for provinces inside or dynamically
+    // To avoid dependency cycles or heavy initial bundle, import dynamically is fine but since it is a client action, we can require/import
+    // Let's define the provinces data import locally
+    const { provinces } = require('@/data/provinces');
+    
+    let nearest = provinces[0];
+    let minDistance = Infinity;
+
+    for (const province of provinces) {
+        const dLat = province.lat - lat;
+        const dLon = province.lon - lon;
+        const distance = dLat * dLat + dLon * dLon;
+        if (distance < minDistance) {
+            minDistance = distance;
+            nearest = province;
+        }
+    }
+    return nearest;
+}

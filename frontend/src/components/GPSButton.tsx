@@ -20,7 +20,7 @@ export default function GPSButton({ onSuccess }: GPSButtonProps) {
                 setError(msgs[err.code] || 'เกิดข้อผิดพลาด');
                 setTimeout(() => setError(null), 4000);
             },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 }
         );
     };
 

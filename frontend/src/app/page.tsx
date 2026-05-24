@@ -11,7 +11,7 @@ import WeatherDetails from '@/components/WeatherDetails';
 import RainEffect from '@/components/RainEffect';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { WeatherData, Province } from '@/types/weather';
-import { fetchWeather } from '@/lib/api';
+import { fetchWeather, findNearestProvince } from '@/lib/api';
 import { CloudSun } from 'lucide-react';
 
 export default function Home() {
@@ -57,7 +57,10 @@ export default function Home() {
         }
     }, [loadWeather]);
 
-    const handleGPSSuccess = (lat: number, lon: number) => loadWeather(lat, lon, 'ตำแหน่งปัจจุบัน');
+    const handleGPSSuccess = (lat: number, lon: number) => {
+        const nearest = findNearestProvince(lat, lon);
+        loadWeather(lat, lon, nearest.name);
+    };
     const handleProvinceSelect = (p: Province) => {
         setSelectedProvince(p);
         loadWeather(p.lat, p.lon, p.name);
